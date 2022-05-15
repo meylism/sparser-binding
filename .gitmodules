@@ -1,0 +1,3 @@
+[submodule "sparser-jni"]
+	path = sparser-jni
+	url = https://github.com/meylism/sparser-jni
