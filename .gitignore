@@ -3,3 +3,5 @@
 target/
 sparser.iml
 .DS_Store
+*.h
+*.cpp
