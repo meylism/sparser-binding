@@ -2,12 +2,10 @@ package com.meylism.sparser;
 
 public class Sparser {
   static {
-    System.out.println(System.getProperty("java.library.path"));
-    System.loadLibrary("libsparser");
-    init();
+    System.loadLibrary("sparser");
   }
 
-  public native long filter(String line, String predicate);
+  public native long filter(String line, int lineLength, String[] predicates, int numberOfPredicates);
 
   public static native void init();
 }

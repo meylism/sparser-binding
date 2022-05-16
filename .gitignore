@@ -1,3 +1,5 @@
 .idea/
+.vscode/
 target/
 sparser.iml
+.DS_Store

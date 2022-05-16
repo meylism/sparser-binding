@@ -8,6 +8,8 @@ public class SparserTest {
   @Test
   public void printTest() {
     Sparser sparser = new Sparser();
-    sparser.filter("Heyyy", "jdks");
+    String line = "dsfsdksdksldsds";
+    String predicates[] = new String[] {"Elon", "Musk"};
+    sparser.filter(line, line.length(), predicates, predicates.length);
   }
 }
