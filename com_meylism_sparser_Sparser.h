@@ -10,18 +10,10 @@ extern "C" {
 /*
  * Class:     com_meylism_sparser_Sparser
  * Method:    filter
- * Signature: (Ljava/lang/String;I[Ljava/lang/String;I)J
+ * Signature: (Ljava/lang/String;[Ljava/lang/String;)J
  */
 JNIEXPORT jlong JNICALL Java_com_meylism_sparser_Sparser_filter
-  (JNIEnv *, jobject, jstring, jint, jobjectArray, jint);
-
-/*
- * Class:     com_meylism_sparser_Sparser
- * Method:    init
- * Signature: ()V
- */
-JNIEXPORT void JNICALL Java_com_meylism_sparser_Sparser_init
-  (JNIEnv *, jclass);
+  (JNIEnv *, jobject, jstring, jobjectArray);
 
 #ifdef __cplusplus
 }

@@ -5,3 +5,4 @@ sparser.iml
 .DS_Store
 *.h
 *.cpp
+/src/main/resources/*
