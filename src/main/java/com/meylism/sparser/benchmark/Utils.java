@@ -1,29 +1,47 @@
 package com.meylism.sparser.benchmark;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import org.apache.commons.io.FileUtils;
+
+import java.io.*;
 import java.util.ArrayList;
 
 public class Utils {
-  public static String loadJson(final String resourceName, ArrayList<String> forJackson) throws IOException {
+  public static Object loadJson(final String resourceName, boolean isString) throws IOException {
     final InputStream stream = Utils.class.getResourceAsStream("/" + resourceName);
-    final String jsonText = readFromInputStream(stream, forJackson);
-    return jsonText;
+    if (isString) {
+      StringBuilder sb = new StringBuilder();
+      return readFromInputStream(stream, sb);
+    }
+    ArrayList<String> lines = new ArrayList<>();
+    readFromInputStream(stream, lines);
+    return lines;
   }
 
-  private static String readFromInputStream(InputStream inputStream, ArrayList<String> forJackson)
+  private static String readFromInputStream(InputStream inputStream, StringBuilder sb)
       throws IOException {
-    StringBuilder resultStringBuilder = new StringBuilder();
     try (BufferedReader br
         = new BufferedReader(new InputStreamReader(inputStream))) {
       String line;
       while ((line = br.readLine()) != null) {
-        forJackson.add(line);
-        resultStringBuilder.append(line).append("\n");
+        sb.append(line).append("\n");
+      }
+      return sb.toString();
+    }
+  }
+
+  private static void readFromInputStream(InputStream inputStream, ArrayList<String> lines)
+      throws IOException {
+    try (BufferedReader br
+        = new BufferedReader(new InputStreamReader(inputStream))) {
+      String line;
+      while ((line = br.readLine()) != null) {
+        lines.add(line);
       }
     }
-    return resultStringBuilder.toString();
+  }
+
+  public static String loadJson(String resourceName) throws IOException {
+    File file = new File(Utils.class.getClass().getResource("/" + resourceName).getFile());
+    return FileUtils.readFileToString(file);
   }
 }

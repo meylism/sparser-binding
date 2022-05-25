@@ -1,15 +1,13 @@
 package com.meylism.sparser;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.meylism.sparser.parser.Parser;
 
 public class Sparser {
-  private ObjectMapper mapper;
+  int i = 0;
+  private final Parser parser;
 
-  public Sparser() {
-    mapper = new ObjectMapper();
-    mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+  public Sparser(Parser parser) {
+    this.parser = parser;
   }
 
   static {
@@ -19,12 +17,11 @@ public class Sparser {
   public native long filter(String text, String[] predicates);
 
   public int parse(String text) throws Exception {
-    try {
-      JsonNode node = mapper.readTree(text);
-      return node != null ? 1 : 0;
-    } catch (Exception e) {
-      e.printStackTrace();
-      throw new Exception(e);
-    }
+//    i++;
+
+//    System.out.println(i);
+    Object res = parser.deserialize(text);
+    assert res != null;
+    return 1;
   }
 }

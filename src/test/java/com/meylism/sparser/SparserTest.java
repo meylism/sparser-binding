@@ -4,33 +4,36 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.meylism.sparser.benchmark.Utils;
+import com.meylism.sparser.constants.BenchConstants;
+import com.meylism.sparser.parser.HiveSerdeParser;
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.hive.serde.serdeConstants;
+import org.apache.hadoop.hive.serde2.JsonSerDe;
+import org.apache.hadoop.hive.serde2.SerDeException;
+import org.apache.hadoop.io.Text;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Properties;
 
 import static org.junit.Assert.*;
 
 public class SparserTest {
   @Test
-  public void withSparser() throws IOException {
-    Sparser sparser = new Sparser();
-    String jsonText = Utils.loadJson("twitter.json", new ArrayList<>());
-//    String text = "{\"name\": \"Meylis\"}\n{\"name\": \"Mekan\"}";
-    String predicates[] = new String[] {"elon", "musk", "twitter"};
-    sparser.filter(jsonText, predicates);
-  }
+  public void testDeserialize() throws IOException, SerDeException {
+    String jsonText = (String)Utils.loadJson("twitter.json", true);
 
-  @Test
-  public void withoutSparser() throws IOException {
-    ObjectMapper objectMapper = new ObjectMapper();
-    ArrayList<String> data = new ArrayList<>();
-    String jsonText = Utils.loadJson("twitter.json", data);
-    for (String line: data) {
-      JsonNode node = objectMapper.readTree(line);
-      Assert.assertNotNull(node);
-    }
-    System.out.println(data.size());
+    Properties props = new Properties();
+
+    props.setProperty(serdeConstants.LIST_COLUMNS, BenchConstants.TWITTER_COLUMN_NAMES);
+    props.setProperty(serdeConstants.LIST_COLUMN_TYPES, BenchConstants.TWITTER_COLUMN_TYPES);
+
+    JsonSerDe jsonSerDe = new JsonSerDe();
+    jsonSerDe.initialize(new Configuration(), props, null);
+
+    final Object result = jsonSerDe.deserialize(new Text(jsonText));
+    Assert.assertNotNull(result);
   }
 }
