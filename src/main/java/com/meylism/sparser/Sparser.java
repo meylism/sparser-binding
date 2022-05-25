@@ -1,7 +1,5 @@
 package com.meylism.sparser;
 
-import com.meylism.sparser.parser.Parser;
-
 public class Sparser {
   int i = 0;
   private final Parser parser;

@@ -28,7 +28,7 @@ import java.util.concurrent.TimeUnit;
 @OutputTimeUnit(TimeUnit.SECONDS)
 @State(Scope.Benchmark)
 public class HiveSerdeBenchmark {
-  @Param({"twitter2.json"})
+  @Param({"twitter.json", "twitter2.json"})
   public String resource;
   public String jsonText;
   public ArrayList<String> jsonAsLines;
@@ -56,9 +56,12 @@ public class HiveSerdeBenchmark {
 
   @Setup
   public void setup() throws IOException, SerDeException {
+    System.out.println(Runtime.getRuntime().maxMemory());
     // bench init
-    jsonText = (String)Utils.loadJson(resource);
-    jsonAsLines = (ArrayList<String>)Utils.loadJson(resource, false);
+    StringBuilder sb = new StringBuilder();
+    jsonAsLines = new ArrayList<>();
+    Utils.loadJson(resource, sb, jsonAsLines);
+    jsonText = sb.toString();
     predicates = new String[]{"elon", "musk"};
 
     // Serde init

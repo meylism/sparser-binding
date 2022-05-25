@@ -6,42 +6,21 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class Utils {
-  public static Object loadJson(final String resourceName, boolean isString) throws IOException {
+  public static void loadJson(final String resourceName, StringBuilder sb, ArrayList<String> lines) throws IOException {
     final InputStream stream = Utils.class.getResourceAsStream("/" + resourceName);
-    if (isString) {
-      StringBuilder sb = new StringBuilder();
-      return readFromInputStream(stream, sb);
-    }
-    ArrayList<String> lines = new ArrayList<>();
-    readFromInputStream(stream, lines);
-    return lines;
+    readFromInputStream(stream, sb, lines);
   }
 
-  private static String readFromInputStream(InputStream inputStream, StringBuilder sb)
+  private static void readFromInputStream(InputStream inputStream, StringBuilder sb, ArrayList<String> lines)
       throws IOException {
-    try (BufferedReader br
-        = new BufferedReader(new InputStreamReader(inputStream))) {
+    try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
       String line;
       while ((line = br.readLine()) != null) {
-        sb.append(line).append("\n");
-      }
-      return sb.toString();
-    }
-  }
-
-  private static void readFromInputStream(InputStream inputStream, ArrayList<String> lines)
-      throws IOException {
-    try (BufferedReader br
-        = new BufferedReader(new InputStreamReader(inputStream))) {
-      String line;
-      while ((line = br.readLine()) != null) {
-        lines.add(line);
+        if (sb != null)
+          sb.append(line).append("\n");
+        if (lines != null)
+          lines.add(line);
       }
     }
-  }
-
-  public static String loadJson(String resourceName) throws IOException {
-    File file = new File(Utils.class.getClass().getResource("/" + resourceName).getFile());
-    return FileUtils.readFileToString(file);
   }
 }

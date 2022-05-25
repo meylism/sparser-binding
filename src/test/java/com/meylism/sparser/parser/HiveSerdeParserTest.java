@@ -20,7 +20,9 @@ public class HiveSerdeParserTest {
   @Test
   public void testDeserializeSparser() throws IOException, SerDeException {
     System.out.println(Runtime.getRuntime().maxMemory());
-    String jsonText = Utils.loadJson("twitter2.json");
+    StringBuilder sb = new StringBuilder();
+    Utils.loadJson("twitter2.json", sb, null);
+    String jsonText = sb.toString();
     String[] predicates = new String[]{"meylis", "matiyev"};
 
     Properties props = new Properties();
@@ -41,7 +43,8 @@ public class HiveSerdeParserTest {
 
   @Test
   public void testDeserializeWithoutSparser() throws IOException, SerDeException {
-    List<String> lines = (List<String>) Utils.loadJson("twitter2.json", false);
+    ArrayList<String> lines = new ArrayList<>();
+    Utils.loadJson("twitter2.json", null, lines);
 
     Properties props = new Properties();
 

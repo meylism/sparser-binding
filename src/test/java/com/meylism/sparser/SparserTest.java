@@ -23,7 +23,9 @@ import static org.junit.Assert.*;
 public class SparserTest {
   @Test
   public void testDeserialize() throws IOException, SerDeException {
-    String jsonText = (String)Utils.loadJson("twitter.json", true);
+    StringBuilder sb = new StringBuilder();
+    Utils.loadJson("twitter.json", sb, null);
+    String jsonText = sb.toString();
 
     Properties props = new Properties();
 

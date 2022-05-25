@@ -3,7 +3,7 @@ import os
 
 
 if __name__ == "__main__":
-    code_dir = "/Users/meylismatiyev/Documents/sparser"
+    code_dir = "/Users/meylismatiyev/Documents/sparser-java"
     os.chdir(f"{code_dir}/sparser-jni")
 #     os.system(f"cd {code_dir}/sparser-jni")
     os.system("make clean && make")

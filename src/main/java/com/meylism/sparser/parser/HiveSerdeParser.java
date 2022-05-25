@@ -1,5 +1,6 @@
 package com.meylism.sparser.parser;
 
+import com.meylism.sparser.Parser;
 import org.apache.hadoop.hive.serde2.JsonSerDe;
 import org.apache.hadoop.hive.serde2.SerDeException;
 import org.apache.hadoop.io.Text;
