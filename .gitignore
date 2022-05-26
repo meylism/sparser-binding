@@ -6,3 +6,4 @@ sparser.iml
 *.h
 *.cpp
 /src/main/resources/*
+*.log
