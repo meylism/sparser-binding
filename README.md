@@ -23,7 +23,7 @@ The code to be bound(`sparser-jni`) is added as a dependency to this project. Fi
       git submodule init
       git submodule update
       ```
-- Then go ahead and run `python prepare.py`. The script is supposed to do the following:
+- Then go ahead and `cd` to `sparser-jni`. Then run `make all`. The script is supposed to do the following:
   - first build the `sparser-jni` project(using the Make file there). As a result the shared library(.dylib/.so) 
     will be put in the `sparser-jni/libs` directory. 
   - and then create a soft link to the library in a directory to which Java can reach(`java.library.path`).
