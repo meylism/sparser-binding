@@ -7,3 +7,4 @@ sparser.iml
 *.cpp
 /src/main/resources/*
 *.log
+*.swp
