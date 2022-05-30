@@ -9,11 +9,35 @@ extern "C" {
 #endif
 /*
  * Class:     com_meylism_sparser_Sparser
+ * Method:    decompose
+ * Signature: ([Ljava/lang/String;)V
+ */
+JNIEXPORT void JNICALL Java_com_meylism_sparser_Sparser_decompose
+  (JNIEnv *, jobject, jobjectArray);
+
+/*
+ * Class:     com_meylism_sparser_Sparser
+ * Method:    calibrate
+ * Signature: (Ljava/lang/String;)V
+ */
+JNIEXPORT void JNICALL Java_com_meylism_sparser_Sparser_calibrate
+  (JNIEnv *, jobject, jstring);
+
+/*
+ * Class:     com_meylism_sparser_Sparser
  * Method:    filter
- * Signature: (Ljava/lang/String;[Ljava/lang/String;)J
+ * Signature: (Ljava/lang/String;)J
  */
 JNIEXPORT jlong JNICALL Java_com_meylism_sparser_Sparser_filter
-  (JNIEnv *, jobject, jstring, jobjectArray);
+  (JNIEnv *, jobject, jstring);
+
+/*
+ * Class:     com_meylism_sparser_Sparser
+ * Method:    parse
+ * Signature: (Ljava/lang/String;)I
+ */
+JNIEXPORT jint JNICALL Java_com_meylism_sparser_Sparser_parse
+  (JNIEnv *, jobject, jstring);
 
 #ifdef __cplusplus
 }

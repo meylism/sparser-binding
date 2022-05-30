@@ -43,7 +43,7 @@ public class SparserBenchmark {
 
   @Benchmark
   public void parseWithSparser(Blackhole bh) {
-    Long res = sparser.filter(jsonText, predicates);
+    Long res = sparser.filter(jsonText);
     bh.consume(res);
   }
 

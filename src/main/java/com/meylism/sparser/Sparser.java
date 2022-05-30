@@ -1,7 +1,6 @@
 package com.meylism.sparser;
 
 public class Sparser {
-  int i = 0;
   private final Parser parser;
 
   public Sparser(Parser parser) {
@@ -12,12 +11,14 @@ public class Sparser {
     System.loadLibrary("sparser");
   }
 
-  public native long filter(String text, String[] predicates);
+  public native void decompose(String[] predicates);
+
+  public native void calibrate(String text);
+
+  public native long filter(String text);
 
   public int parse(String text) throws Exception {
-//    i++;
-
-//    System.out.println(i);
+//    System.out.println(text);
     Object res = parser.deserialize(text);
     assert res != null;
     return 1;

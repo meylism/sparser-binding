@@ -1,6 +1,5 @@
 package com.meylism.sparser.benchmark;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.meylism.sparser.Sparser;
 import com.meylism.sparser.constants.BenchConstants;
 import com.meylism.sparser.parser.HiveSerdeParser;
@@ -8,7 +7,6 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hive.serde.serdeConstants;
 import org.apache.hadoop.hive.serde2.JsonSerDe;
 import org.apache.hadoop.hive.serde2.SerDeException;
-import org.apache.hadoop.io.Text;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.infra.Blackhole;
 import org.openjdk.jmh.runner.Runner;
@@ -42,7 +40,9 @@ public class HiveSerdeBenchmark {
 
   @Benchmark
   public void withSparser(Blackhole bh) {
-    long res = sparser.filter(jsonText, predicates);
+    sparser.decompose(predicates);
+    sparser.calibrate(jsonText);
+    long res = sparser.filter(jsonText);
     bh.consume(res);
   }
 
@@ -78,6 +78,8 @@ public class HiveSerdeBenchmark {
 
     // Sparser
     sparser = new Sparser(parser);
+//    sparser.decompose(predicates);
+//    sparser.calibrate(jsonText);
   }
 
   public static void main(String[] args) throws RunnerException {

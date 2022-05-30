@@ -13,7 +13,6 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 
 public class HiveSerdeParserTest {
@@ -21,9 +20,10 @@ public class HiveSerdeParserTest {
   public void testDeserializeSparser() throws IOException, SerDeException {
     System.out.println(Runtime.getRuntime().maxMemory());
     StringBuilder sb = new StringBuilder();
-    Utils.loadJson("twitter2.json", sb, null);
+    Utils.loadJson("twitter.json", sb, null);
     String jsonText = sb.toString();
-    String[] predicates = new String[]{"meylis", "matiyev"};
+//    String jsonText = "{\"name\":\"Meylis\", \"surname\": \"Matiyev\"}\n{\"name\":\"Elon\", \"surname\": \"Matiyev\"}";
+    String[] predicates = new String[]{"elon", "musk"};
 
     Properties props = new Properties();
 
@@ -35,10 +35,16 @@ public class HiveSerdeParserTest {
 
     HiveSerdeParser hiveSerdeParser = new HiveSerdeParser(jsonSerDe);
     Sparser sparser = new Sparser(hiveSerdeParser);
+    sparser.decompose(predicates);
+    sparser.calibrate(jsonText);
+    for(int i=0; i<=2; i++) {
+      sparser.decompose(predicates);
+      sparser.calibrate(jsonText);
+      long res = sparser.filter(jsonText);
+      System.out.println(res);
+    }
 
-    long res = sparser.filter(jsonText, predicates);
-
-    Assert.assertNotNull(res);
+//    Assert.assertNotNull(res);
   }
 
   @Test
